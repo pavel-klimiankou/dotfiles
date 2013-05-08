@@ -57,4 +57,5 @@ set foldlevel=1
 
 ":TagbarToggle
 
+"blames current selection with svn
 vmap gl :<C-U>!svn blame "<C-R>=expand("%:p") <CR>" \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
