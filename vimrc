@@ -59,3 +59,5 @@ set foldlevel=1
 
 "blames current selection with svn
 vmap gl :<C-U>!svn blame "<C-R>=expand("%:p") <CR>" \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
+
+nmap <leader>r :vsplit $MYVIMRC<cr>
