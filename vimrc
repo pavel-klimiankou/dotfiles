@@ -42,6 +42,8 @@ noremap! <Right> <Esc>
 call pathogen#infect()
 
 let mapleader = ","
+let maplocalleader = "\\"
+
 nnoremap <F5> :GundoToggle<CR>
 let g:CommandTMaxHeight=10
 
@@ -50,12 +52,26 @@ set wildmode=list:longest
 
 "folding
 set foldmethod=indent
-set foldnestmax=10
-set nofoldenable
-set foldlevel=1
 :au Filetype html,xml,xsl source ~/.vim/scripts/closetag.vim 
 
 ":TagbarToggle
 
-"blames current selection with svn
+"blames curvent selection with svn
 vmap gl :<C-U>!svn blame "<C-R>=expand("%:p") <CR>" \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
+
+"apply new vimrc
+nnoremap <leader>sv :source $MYVIMRC<cr>
+"open vimrc in vertical split
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+"surround word with quotes
+nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
+nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
+"strong left/right
+nnoremap H ^
+nnoremap L $
+"surround selection with quotes
+vnoremap <leader>' <esc>`<i'<esc>`>la'<esc>`<lv`>l
+vnoremap <leader>" <esc>`<i"<esc>`>la"<esc>`<lv`>l
+"replace <esc> with jk
+inoremap jk <esc>
+inoremap <esc> <nop>

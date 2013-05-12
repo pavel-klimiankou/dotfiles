@@ -6,7 +6,7 @@
 target=~/dotfiles
 backup=~/dotfiles_old
 
-symlinks="vimrc bashrc vim"
+symlinks="vimrc bashrc vim gvimrc"
 
 echo "Create backup folder"
 mkdir $backup
