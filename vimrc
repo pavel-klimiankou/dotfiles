@@ -19,10 +19,6 @@ set undolevels=1000
 set nobackup
 set noswapfile
 
-" new color scheme from somewhere
-hi CursorLine cterm=NONE ctermbg=17 guibg=darkgray
-" end new color scheme
-
 " new options from Gary
 set cursorline
 set cmdheight=2
@@ -42,7 +38,7 @@ noremap! <Right> <Esc>
 call pathogen#infect()
 
 let mapleader = ","
-let maplocalleader = "\\"
+let maplocalleader = ","
 
 nnoremap <F5> :GundoToggle<CR>
 let g:CommandTMaxHeight=10
@@ -61,8 +57,10 @@ vmap gl :<C-U>!svn blame "<C-R>=expand("%:p") <CR>" \| sed -n <C-R>=line("'<") <
 
 "apply new vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>sg :source $MYGVIMRC<cr>
 "open vimrc in vertical split
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>eg :vsplit $MYGVIMRC<cr>
 "surround word with quotes
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
@@ -70,8 +68,21 @@ nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
 nnoremap H ^
 nnoremap L $
 "surround selection with quotes
-vnoremap <leader>' <esc>`<i'<esc>`>la'<esc>`<lv`>l
-vnoremap <leader>" <esc>`<i"<esc>`>la"<esc>`<lv`>l
+vnoremap <leader>' <esc>`<i'<esc>`>la'<esc>
+vnoremap <leader>" <esc>`<i"<esc>`>la"<esc>
+"`<lv`>l - restore selection. In practice appeared to be inconvenient
+
 "replace <esc> with jk
 inoremap jk <esc>
 inoremap <esc> <nop>
+
+"just playing with abbreviations
+iabbrev teh the
+
+"insert comment
+:au FileType javascript vnoremap <buffer> <localleader>/ <esc>`<i/*<esc>`>a*/<esc>
+:autocmd FileType javascript setlocal nowrap
+:autocmd FileType html setlocal spell
+:au FileType javascript nnoremap <buffer> <localleader>/ 0i//<esc>jw
+:au FileType vim nnoremap <buffer> <localleader>/ 0i"<esc>jw
+:au FileType html nnoremap <buffer> <localleader>/ I<!--<esc>A--><esc>j^
