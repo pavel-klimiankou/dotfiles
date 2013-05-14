@@ -81,7 +81,7 @@ func! RemoveChar(pat)
 endfunc
 
 "just playing with abbreviations
-augroup javascrupt
+augroup javascript
 	autocmd!
 	au FileType javascript :iabbrev <buffer> re return;<Left>
 	au FileType javascript :iabbrev <buffer> return NOWDELETEITANDUSEABBREVINSTEAD!
