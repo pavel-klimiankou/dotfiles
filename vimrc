@@ -47,8 +47,7 @@ let g:CommandTMaxHeight=10
 set wildmode=list:longest
 
 "folding
-set foldmethod=indent
-:au Filetype html,xml,xsl source ~/.vim/scripts/closetag.vim 
+set foldmethod=manual
 
 ":TagbarToggle
 
@@ -76,22 +75,36 @@ vnoremap <leader>" <esc>`<i"<esc>`>la"<esc>
 inoremap jk <esc>
 inoremap <esc> <nop>
 
-"just playing with abbreviations
-:au FileType javascript :iabbrev <buffer> re return;<Left>
-:au FileType javascript :iabbrev <buffer> return NOWDELETEITANDUSEABBREVINSTEAD!
-
 func! RemoveChar(pat)
 	let c = nr2char(getchar(0))
 	return (c =~ a:pat) ? '' : c
 endfunc
 
-:au FileType javascript :iabbrev <buffer> <silent> fun function () {}<Left><Left><Left><Left><C-R>=RemoveChar('\s')<CR>
-:au FileType javascript :iabbrev <buffer> function NOWDELETEITANDUSEABBREVINSTEAD!
+"just playing with abbreviations
+augroup javascrupt
+	autocmd!
+	au FileType javascript :iabbrev <buffer> re return;<Left>
+	au FileType javascript :iabbrev <buffer> return NOWDELETEITANDUSEABBREVINSTEAD!
+	au FileType javascript :iabbrev <buffer> <silent> fun function () {}<Left><Left><Left><Left><C-R>=RemoveChar('\s')<CR>
+	au FileType javascript :iabbrev <buffer> function NOWDELETEITANDUSEABBREVINSTEAD!
 
-"insert comment
-:au FileType javascript vnoremap <buffer> <localleader>/ <esc>`<i/*<esc>`>a*/<esc>
-:autocmd FileType javascript setlocal nowrap
-:autocmd FileType html setlocal spell
-:au FileType javascript nnoremap <buffer> <localleader>/ 0i//<esc>jw
-:au FileType vim nnoremap <buffer> <localleader>/ 0i"<esc>jw
-:au FileType html nnoremap <buffer> <localleader>/ I<!--<esc>A--><esc>j^
+	"insert comment
+	au FileType javascript vnoremap <buffer> <localleader>/ <esc>`<i/*<esc>`>a*/<esc>
+	au FileType javascript setlocal nowrap
+	au FileType javascript nnoremap <buffer> <localleader>/ 0i//<esc>jw
+augroup END
+
+augroup myvim
+	autocmd!
+	au FileType vim nnoremap <buffer> <localleader>/ 0i"<esc>jw
+augroup END
+
+augroup html
+	autocmd!
+	au Filetype html,xml,xsl source ~/.vim/scripts/closetag.vim 
+	au FileType html setlocal spell
+	au FileType html nnoremap <buffer> <localleader>/ I<!--<esc>A--><esc>j^
+augroup END
+
+
+
