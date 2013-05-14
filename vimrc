@@ -24,16 +24,16 @@ set cursorline
 set cmdheight=2
 set shell=bash
 set switchbuf=useopen
-
 " end new options
-noremap  <Up> ""
-noremap! <Up> <Esc>
-noremap  <Down> ""
-noremap! <Down> <Esc>
-noremap  <Left> ""
-noremap! <Left> <Esc>
-noremap  <Right> ""
-noremap! <Right> <Esc>
+
+"noremap  <Up> ""
+"noremap! <Up> <Esc>
+"noremap  <Down> ""
+"noremap! <Down> <Esc>
+"noremap  <Left> ""
+"noremap! <Left> <Esc>
+"noremap  <Right> ""
+"noremap! <Right> <Esc>
 
 call pathogen#infect()
 
@@ -77,7 +77,16 @@ inoremap jk <esc>
 inoremap <esc> <nop>
 
 "just playing with abbreviations
-iabbrev teh the
+:au FileType javascript :iabbrev <buffer> re return;<Left>
+:au FileType javascript :iabbrev <buffer> return NOWDELETEITANDUSEABBREVINSTEAD!
+
+func! RemoveChar(pat)
+	let c = nr2char(getchar(0))
+	return (c =~ a:pat) ? '' : c
+endfunc
+
+:au FileType javascript :iabbrev <buffer> <silent> fun function () {}<Left><Left><Left><Left><C-R>=RemoveChar('\s')<CR>
+:au FileType javascript :iabbrev <buffer> function NOWDELETEITANDUSEABBREVINSTEAD!
 
 "insert comment
 :au FileType javascript vnoremap <buffer> <localleader>/ <esc>`<i/*<esc>`>a*/<esc>
