@@ -1,3 +1,4 @@
+"options {{{
 set nocompatible
 syntax on
 set antialias
@@ -18,20 +19,21 @@ set history=1000
 set undolevels=1000
 set nobackup
 set noswapfile
-
-"statusline begins
-set statusline=%#Title#%f
-set statusline+=%#StatusLine#\ [%04l/%04L]
-set statusline+=%y
-"statusline ends
-
-" new options from Gary
 set cursorline
 set cmdheight=2
 set shell=bash
 set switchbuf=useopen
-" end new options
+set wildmode=list:longest
+set foldmethod=manual
+"}}}
 
+"statusline {{{
+set statusline=%#Title#%f
+set statusline+=%#StatusLine#\ [%04l/%04L]
+set statusline+=%y
+"statusline }}}
+
+"disable arrows {{{
 "noremap  <Up> ""
 "noremap! <Up> <Esc>
 "noremap  <Down> ""
@@ -40,23 +42,20 @@ set switchbuf=useopen
 "noremap! <Left> <Esc>
 "noremap  <Right> ""
 "noremap! <Right> <Esc>
+"}}}
 
-call pathogen#infect()
-
+"leader and local leader{{{
 let mapleader = ","
 let maplocalleader = ","
+"}}}
 
+"plugins config {{{
+call pathogen#infect()
 nnoremap <F5> :GundoToggle<CR>
 let g:CommandTMaxHeight=10
+"}}}
 
-"peepcode
-set wildmode=list:longest
-
-"folding
-set foldmethod=manual
-
-":TagbarToggle
-
+"filetype independent mappings{{{
 "blames curvent selection with svn
 vmap gl :<C-U>!svn blame "<C-R>=expand("%:p") <CR>" \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
 
@@ -69,17 +68,19 @@ nnoremap <leader>eg :vsplit $MYGVIMRC<cr>
 "surround word with quotes
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
-"strong left/right
-nnoremap H ^
-nnoremap L $
 "surround selection with quotes
 vnoremap <leader>' <esc>`<i'<esc>`>la'<esc>
 vnoremap <leader>" <esc>`<i"<esc>`>la"<esc>
+
+"strong left/right
+nnoremap H ^
+nnoremap L $
 "`<lv`>l - restore selection. In practice appeared to be inconvenient
 
 "replace <esc> with jk
 inoremap jk <esc>
 inoremap <esc> <nop>
+"}}}
 
 "javascript shortcuts {{{
 func! RemoveChar(pat)
@@ -108,9 +109,9 @@ augroup END
 augroup myvim
 	autocmd!
 	autocmd FileType vim nnoremap <buffer> <localleader>/ 0i"<esc>jw
+	autocmd FileType vim setlocal foldmethod=marker
 augroup END
 "}}}
-
 
 "html shortcuts {{{
 augroup html
@@ -121,13 +122,9 @@ augroup html
 augroup END
 "}}}
 
-
 "help shortcuts {{{
 augroup help
 	autocmd!
 	autocmd FileType help setlocal statusline=%f
 augroup END
 "}}}
-
-
-
