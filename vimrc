@@ -19,6 +19,12 @@ set undolevels=1000
 set nobackup
 set noswapfile
 
+"statusline begins
+set statusline=%#Title#%f
+set statusline+=%#StatusLine#\ [%04l/%04L]
+set statusline+=%y
+"statusline ends
+
 " new options from Gary
 set cursorline
 set cmdheight=2
@@ -75,36 +81,53 @@ vnoremap <leader>" <esc>`<i"<esc>`>la"<esc>
 inoremap jk <esc>
 inoremap <esc> <nop>
 
+"javascript shortcuts {{{
 func! RemoveChar(pat)
 	let c = nr2char(getchar(0))
 	return (c =~ a:pat) ? '' : c
 endfunc
 
-"just playing with abbreviations
 augroup javascript
 	autocmd!
-	au FileType javascript :iabbrev <buffer> re return;<Left>
-	au FileType javascript :iabbrev <buffer> return NOWDELETEITANDUSEABBREVINSTEAD!
-	au FileType javascript :iabbrev <buffer> <silent> fun function () {}<Left><Left><Left><Left><C-R>=RemoveChar('\s')<CR>
-	au FileType javascript :iabbrev <buffer> function NOWDELETEITANDUSEABBREVINSTEAD!
+	autocmd FileType javascript :iabbrev <buffer> re return;<Left>
+	autocmd FileType javascript :iabbrev <buffer> return NOWDELETEITANDUSEABBREVINSTEAD!
+	autocmd FileType javascript :iabbrev <buffer> <silent> fun function () {}<Left><Left><Left><Left><C-R>=RemoveChar('\s')<CR>
+	autocmd FileType javascript :iabbrev <buffer> function NOWDELETEITANDUSEABBREVINSTEAD!
 
 	"insert comment
-	au FileType javascript vnoremap <buffer> <localleader>/ <esc>`<i/*<esc>`>a*/<esc>
-	au FileType javascript setlocal nowrap
-	au FileType javascript nnoremap <buffer> <localleader>/ 0i//<esc>jw
-augroup END
+	autocmd FileType javascript vnoremap <buffer> <localleader>/ <esc>`<i/*<esc>`>a*/<esc>
+	autocmd FileType javascript nnoremap <buffer> <localleader>/ 0i//<esc>jw
 
+	autocmd FileType javascript setlocal nowrap
+	"no filetypes at statusline for known files
+	autocmd FileType javascript,html,xml setlocal statusline=%#Title#%f\ %#StatusLine#[%04l/%04L]
+augroup END
+"}}}
+
+"vim shortcuts {{{
 augroup myvim
 	autocmd!
-	au FileType vim nnoremap <buffer> <localleader>/ 0i"<esc>jw
+	autocmd FileType vim nnoremap <buffer> <localleader>/ 0i"<esc>jw
 augroup END
+"}}}
 
+
+"html shortcuts {{{
 augroup html
 	autocmd!
-	au Filetype html,xml,xsl source ~/.vim/scripts/closetag.vim 
-	au FileType html setlocal spell
-	au FileType html nnoremap <buffer> <localleader>/ I<!--<esc>A--><esc>j^
+	autocmd Filetype html,xml,xsl source ~/.vim/scripts/closetag.vim 
+	autocmd  FileType html setlocal spell
+	autocmd FileType html nnoremap <buffer> <localleader>/ I<!--<esc>A--><esc>j^
 augroup END
+"}}}
+
+
+"help shortcuts {{{
+augroup help
+	autocmd!
+	autocmd FileType help setlocal statusline=%f
+augroup END
+"}}}
 
 
 
