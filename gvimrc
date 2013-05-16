@@ -1,13 +1,17 @@
-colorscheme darkblue
+"colorscheme darkblue
+colorscheme vividchalk
 
-"function! Deliver()
+function! Deliver()
 	"echom 'Saving...'
 	"wa
+	let toDir='/Volumes/web/'.expand('%')
+	let fromDir='/Volumes/GEOTAB\ 4/Checkmate/'.expand('%')
 	"let shellcmd='bash /Users/pav/Documents/scrapyard/checkmate/deliver.sh'
-	"echom 'Delivering...'
+	echom toDir
+	echom fromDir
 	"let result=system(shellcmd)
 	"echom 'Done.'
-"endfunction
+endfunction
 
 ":au FocusLost * :wa
 ":au FocusLost * :call Deliver()
