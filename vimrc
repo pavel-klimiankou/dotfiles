@@ -19,7 +19,6 @@ set history=1000
 set undolevels=1000
 set nobackup
 set noswapfile
-set cursorline
 set cmdheight=2
 set shell=bash
 set switchbuf=useopen

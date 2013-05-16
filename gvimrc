@@ -1,5 +1,6 @@
 "colorscheme darkblue
 colorscheme vividchalk
+set cursorline
 
 function! Deliver()
 	"echom 'Saving...'
