@@ -1,3 +1,4 @@
+"options {{{
 set nocompatible
 syntax on
 set antialias
@@ -18,14 +19,21 @@ set history=1000
 set undolevels=1000
 set nobackup
 set noswapfile
-
-" new options from Gary
 set cursorline
 set cmdheight=2
 set shell=bash
 set switchbuf=useopen
-" end new options
+set wildmode=list:longest
+set foldmethod=manual
+"}}}
 
+"statusline {{{
+set statusline=%#Title#%f
+set statusline+=%#StatusLine#\ [%04l/%04L]
+set statusline+=%y
+"statusline }}}
+
+"disable arrows {{{
 "noremap  <Up> ""
 "noremap! <Up> <Esc>
 "noremap  <Down> ""
@@ -34,23 +42,20 @@ set switchbuf=useopen
 "noremap! <Left> <Esc>
 "noremap  <Right> ""
 "noremap! <Right> <Esc>
+"}}}
 
-call pathogen#infect()
-
+"leader and local leader{{{
 let mapleader = ","
 let maplocalleader = ","
+"}}}
 
+"plugins config {{{
+call pathogen#infect()
 nnoremap <F5> :GundoToggle<CR>
 let g:CommandTMaxHeight=10
+"}}}
 
-"peepcode
-set wildmode=list:longest
-
-"folding
-set foldmethod=manual
-
-":TagbarToggle
-
+"filetype independent mappings{{{
 "blames curvent selection with svn
 vmap gl :<C-U>!svn blame "<C-R>=expand("%:p") <CR>" \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
 
@@ -63,57 +68,76 @@ nnoremap <leader>eg :vsplit $MYGVIMRC<cr>
 "surround word with quotes
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
-"strong left/right
-nnoremap H ^
-nnoremap L $
 "surround selection with quotes
 vnoremap <leader>' <esc>`<i'<esc>`>la'<esc>
 vnoremap <leader>" <esc>`<i"<esc>`>la"<esc>
+
+"strong left/right
+nnoremap H ^
+nnoremap L $
 "`<lv`>l - restore selection. In practice appeared to be inconvenient
 
 "replace <esc> with jk
 inoremap jk <esc>
 inoremap <esc> <nop>
+"}}}
 
+"javascript shortcuts {{{
 func! RemoveChar(pat)
 	let c = nr2char(getchar(0))
 	return (c =~ a:pat) ? '' : c
 endfunc
 
-"just playing with abbreviations
 augroup javascript
 	autocmd!
-	au FileType javascript :iabbrev <buffer> re return;<Left>
-	au FileType javascript :iabbrev <buffer> return NOWDELETEITANDUSEABBREVINSTEAD!
-	au FileType javascript :iabbrev <buffer> <silent> fun function () {}<Left><Left><Left><Left><C-R>=RemoveChar('\s')<CR>
-	au FileType javascript :iabbrev <buffer> function NOWDELETEITANDUSEABBREVINSTEAD!
+	autocmd FileType javascript :iabbrev <buffer> re return;<Left>
+	autocmd FileType javascript :iabbrev <buffer> return NOWDELETEITANDUSEABBREVINSTEAD!
+	autocmd FileType javascript :iabbrev <buffer> <silent> fun function () {}<Left><Left><Left><Left><C-R>=RemoveChar('\s')<CR>
+	autocmd FileType javascript :iabbrev <buffer> function NOWDELETEITANDUSEABBREVINSTEAD!
 
 	"insert comment
-	au FileType javascript vnoremap <buffer> <localleader>/ <esc>`<i/*<esc>`>a*/<esc>
-	au FileType javascript setlocal nowrap
-	au FileType javascript nnoremap <buffer> <localleader>/ 0i//<esc>jw
+	autocmd FileType javascript vnoremap <buffer> <localleader>/ <esc>`<i/*<esc>`>a*/<esc>
+	autocmd FileType javascript nnoremap <buffer> <localleader>/ 0i//<esc>jw
 
 	"some motions
-	au FileType javascript onoremap <buffer> p vi)
-	au FileType javascript onoremap <buffer> <silent> in( :<c-u>normal! f(vi)<cr>
-augroup END
+	autocmd FileType javascript onoremap <buffer> p vi)
+ 	autocmd FileType javascript onoremap <buffer> <silent> in( :<c-u>normal! f(vi)<cr>
 
+	autocmd FileType javascript setlocal nowrap
+
+	"no filetypes at statusline for known files
+	autocmd FileType javascript,html,xml setlocal statusline=%#Title#%f\ %#StatusLine#[%04l/%04L]
+augroup END
+"}}}
+
+"vim shortcuts {{{
 augroup myvim
 	autocmd!
-	au FileType vim nnoremap <buffer> <localleader>/ 0i"<esc>jw
+	autocmd FileType vim nnoremap <buffer> <localleader>/ 0i"<esc>jw
+	autocmd FileType vim setlocal foldmethod=marker
 augroup END
+"}}}
 
+"html shortcuts {{{
 augroup html
 	autocmd!
-	au Filetype html,xml,xsl source ~/.vim/scripts/closetag.vim 
-	au FileType html setlocal spell
-	au FileType html nnoremap <buffer> <localleader>/ I<!--<esc>A--><esc>j^
+	autocmd Filetype html,xml,xsl source ~/.vim/scripts/closetag.vim 
+	autocmd  FileType html setlocal spell
+	autocmd FileType html nnoremap <buffer> <localleader>/ I<!--<esc>A--><esc>j^
 augroup END
+"}}}
 
+"help shortcuts {{{
+augroup help
+	autocmd!
+	autocmd FileType help setlocal statusline=%f
+augroup END
+"}}}
+
+"markdown {{{
 augroup markdown
-	au!
-	au FileType markdown onoremap <buffer> <silent> ih :<c-u>execute "normal! ?^==\\+$\r:noh\rkvg_"<cr>
-
-	au FileType markdown onoremap <buffer> <silent> ah :<c-u>execute "normal! ?^==\\+$\r:noh\rg_vk0"<cr>
-
+	autocmd!
+	autocmd FileType markdown onoremap <buffer> <silent> ih :<c-u>execute "normal! ?^==\\+$\r:noh\rkvg_"<cr>
+	autocmd FileType markdown onoremap <buffer> <silent> ah :<c-u>execute "normal! ?^==\\+$\r:noh\rg_vk0"<cr>
 augroup END
+"}}}
