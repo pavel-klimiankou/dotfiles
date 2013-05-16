@@ -92,6 +92,10 @@ augroup javascript
 	au FileType javascript vnoremap <buffer> <localleader>/ <esc>`<i/*<esc>`>a*/<esc>
 	au FileType javascript setlocal nowrap
 	au FileType javascript nnoremap <buffer> <localleader>/ 0i//<esc>jw
+
+	"some motions
+	au FileType javascript onoremap <buffer> p vi)
+	au FileType javascript onoremap <buffer> <silent> in( :<c-u>normal! f(vi)<cr>
 augroup END
 
 augroup myvim
@@ -104,4 +108,12 @@ augroup html
 	au Filetype html,xml,xsl source ~/.vim/scripts/closetag.vim 
 	au FileType html setlocal spell
 	au FileType html nnoremap <buffer> <localleader>/ I<!--<esc>A--><esc>j^
+augroup END
+
+augroup markdown
+	au!
+	au FileType markdown onoremap <buffer> <silent> ih :<c-u>execute "normal! ?^==\\+$\r:noh\rkvg_"<cr>
+
+	au FileType markdown onoremap <buffer> <silent> ah :<c-u>execute "normal! ?^==\\+$\r:noh\rg_vk0"<cr>
+
 augroup END
