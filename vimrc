@@ -55,8 +55,6 @@ let g:CommandTMaxHeight=10
 "}}}
 
 "filetype independent mappings{{{
-"blames curvent selection with svn
-vmap gl :<C-U>!svn blame "<C-R>=expand("%:p") <CR>" \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
 
 "apply new vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr>
@@ -70,15 +68,18 @@ nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
 "surround selection with quotes
 vnoremap <leader>' <esc>`<i'<esc>`>la'<esc>
 vnoremap <leader>" <esc>`<i"<esc>`>la"<esc>
-
 "strong left/right
 nnoremap H ^
 nnoremap L $
 "`<lv`>l - restore selection. In practice appeared to be inconvenient
-
 "replace <esc> with jk
 inoremap jk <esc>
 inoremap <esc> <nop>
+"}}}
+
+"svn mappings {{{
+vnoremap <leader>sl :<C-U>!svn blame "<C-R>=expand("%:p") <CR>" \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
+nnoremap <leader>sd :!svn diff %<cr>
 "}}}
 
 "javascript shortcuts {{{
@@ -87,6 +88,13 @@ func! RemoveChar(pat)
 	return (c =~ a:pat) ? '' : c
 endfunc
 
+"comment section {{{
+augroup JsCsComments
+	autocmd FileType javascript,cs vnoremap <buffer> <localleader>/ <esc>`<i/*<esc>`>a*/<esc>
+	autocmd FileType javascript,cs nnoremap <buffer> <localleader>/ 0i//<esc>jw
+augroup END
+"}}}
+
 augroup javascript
 	autocmd!
 	autocmd FileType javascript :iabbrev <buffer> re return;<Left>
@@ -94,9 +102,7 @@ augroup javascript
 	autocmd FileType javascript :iabbrev <buffer> <silent> fun function () {}<Left><Left><Left><Left><C-R>=RemoveChar('\s')<CR>
 	autocmd FileType javascript :iabbrev <buffer> function NOWDELETEITANDUSEABBREVINSTEAD!
 
-	"insert comment
-	autocmd FileType javascript vnoremap <buffer> <localleader>/ <esc>`<i/*<esc>`>a*/<esc>
-	autocmd FileType javascript nnoremap <buffer> <localleader>/ 0i//<esc>jw
+	autocmd FileType javascript :iabbrev /** /**jko*jko*/jkkA<space>
 
 	"some motions
 	autocmd FileType javascript onoremap <buffer> p vi)
@@ -106,6 +112,14 @@ augroup javascript
 
 	"no filetypes at statusline for known files
 	autocmd FileType javascript,html,xml setlocal statusline=%#Title#%f\ %#StatusLine#[%04l/%04L]
+augroup END
+"}}}
+
+"javascript browser shortcuts {{{
+augroup javascriptBOM
+	autocmd FileType javascript :iabbrev <buffer> <silent> cll console.log();<Left><Left><C-R>=RemoveChar('\s')<CR>
+	autocmd FileType javascript :iabbrev <buffer> <silent> clw console.warn();<Left><Left><C-R>=RemoveChar('\s')<CR>
+
 augroup END
 "}}}
 
