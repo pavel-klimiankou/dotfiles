@@ -68,6 +68,14 @@ nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
 "surround selection with quotes
 vnoremap <leader>' <esc>`<i'<esc>`>la'<esc>
 vnoremap <leader>" <esc>`<i"<esc>`>la"<esc>
+"highlight and unhighlight trailing whitespaces as errors
+"review a bit later - is it really useful
+nnoremap <leader>w :match Error /\v\s+$/<cr>
+nnoremap <leader>W :match none<cr>
+"very magic search
+nnoremap / /\v
+":noh shortcut
+nnoremap <leader>n :noh<cr>
 "strong left/right
 nnoremap H ^
 nnoremap L $
