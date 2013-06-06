@@ -82,6 +82,7 @@ nnoremap L $
 "`<lv`>l - restore selection. In practice appeared to be inconvenient
 "replace <esc> with jk
 inoremap jk <esc>
+vnoremap jk <esc>
 inoremap <esc> <nop>
 "}}}
 
@@ -112,10 +113,6 @@ augroup javascript
 
 	autocmd FileType javascript :iabbrev /** /**jko*jko*/jkkA<space>
 
-	"some motions
-	autocmd FileType javascript onoremap <buffer> p vi)
- 	autocmd FileType javascript onoremap <buffer> <silent> in( :<c-u>normal! f(vi)<cr>
-
 	autocmd FileType javascript setlocal nowrap
 
 	"no filetypes at statusline for known files
@@ -143,7 +140,7 @@ augroup END
 augroup html
 	autocmd!
 	autocmd Filetype html,xml,xsl source ~/.vim/scripts/closetag.vim 
-	autocmd  FileType html setlocal spell
+	autocmd FileType html setlocal spell
 	autocmd FileType html nnoremap <buffer> <localleader>/ I<!--<esc>A--><esc>j^
 augroup END
 "}}}
@@ -158,7 +155,35 @@ augroup END
 "markdown {{{
 augroup markdown
 	autocmd!
+	"motion: inside heading
 	autocmd FileType markdown onoremap <buffer> <silent> ih :<c-u>execute "normal! ?^==\\+$\r:noh\rkvg_"<cr>
+	"motion: outside heading
 	autocmd FileType markdown onoremap <buffer> <silent> ah :<c-u>execute "normal! ?^==\\+$\r:noh\rg_vk0"<cr>
+augroup END
+"}}}
+
+"anyfile utils{{{
+augroup any
+	autocmd!
+"	autocmd FileType * nnoremap <buffer> <silent> <leader>g :silent exe "grep ".shellescape(expand('<cWORD>'))." ".expand('%').""<cr>:silent copen<cr>
+	"next match
+	autocmd FileType * nnoremap <buffer> <leader>j :cn<cr>
+	"previous match
+	autocmd FileType * nnoremap <buffer> <leader>k :cp<cr>
+	"close buffer
+	autocmd FileType * nnoremap <buffer> <leader>q :q<cr>
+augroup END
+"}}}
+
+"temp {{{
+augroup temp
+	autocmd!
+	"source current
+	autocmd FileType * nnoremap <buffer> <leader>sc :w<cr>:source %<cr>
+	"motion: inside current ()
+	autocmd FileType javascript onoremap <buffer> p vi)
+ 	"motion: find next and apply inside ()
+ 	autocmd FileType javascript onoremap <buffer> <silent> in( :<c-u>normal! f(vi)<cr>
+
 augroup END
 "}}}
