@@ -24,6 +24,8 @@ set shell=bash
 set switchbuf=useopen
 set wildmode=list:longest
 set foldmethod=manual
+set foldcolumn=1
+filetype plugin on 	"enable ftplugin. See :help filetype-plugin-on
 "}}}
 
 "statusline {{{
@@ -68,6 +70,8 @@ nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
 "surround selection with quotes
 vnoremap <leader>' <esc>`<i'<esc>`>la'<esc>
 vnoremap <leader>" <esc>`<i"<esc>`>la"<esc>
+vnoremap <leader>) <esc>`<i(<esc>`>la)<esc>
+vnoremap <leader>] <esc>`<i[<esc>`>la]<esc>
 "highlight and unhighlight trailing whitespaces as errors
 "review a bit later - is it really useful
 nnoremap <leader>w :match Error /\v\s+$/<cr>
@@ -112,6 +116,8 @@ augroup javascript
 	autocmd FileType javascript :iabbrev <buffer> function NOWDELETEITANDUSEABBREVINSTEAD!
 
 	autocmd FileType javascript :iabbrev /** /**jko*jko*/jkkA<space>
+
+	autocmd FileType javascript :iabbrev <buffer> 127. 127.0.0.1<C-R>=RemoveChar('\s')<CR>
 
 	autocmd FileType javascript setlocal nowrap
 
