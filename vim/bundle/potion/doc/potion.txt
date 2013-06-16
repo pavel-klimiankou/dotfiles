@@ -1,0 +1,24 @@
+*potion* Yet another programming language
+
+                      ___      _   _              ~
+                     / _ \___ | |_(_) ___  _ __   ~
+                    / /_)/ _ \| __| |/ _ \| '_ \  ~
+                   / ___/ (_) | |_| | (_) | | | | ~
+                   \/    \___/ \__|_|\___/|_| |_| ~
+
+          Functionality for the Potion programming language.
+
+============================================================
+CONTENTS									*PotionContents*
+
+	1. Getting Started						|PotionGettingStarted|
+	2. Getting Finishe						|PotionGettingFinished|
+
+
+============================================================
+1. Getting Started							*PotionGettingStarted*
+
+	Well, you already did
+
+============================================================
+2. Getting Finished							*PotionGettingFinished*
