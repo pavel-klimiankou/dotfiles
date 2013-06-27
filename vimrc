@@ -26,6 +26,7 @@ set wildmode=list:longest
 set foldmethod=manual
 set foldcolumn=1
 filetype plugin on 	"enable ftplugin. See :help filetype-plugin-on
+set grepprg=grep\ --exclude-dir\ '.svn'\ -n\ $*\ /dev/null
 "}}}
 
 "statusline {{{
@@ -171,7 +172,6 @@ augroup END
 "anyfile utils{{{
 augroup any
 	autocmd!
-"	autocmd FileType * nnoremap <buffer> <silent> <leader>g :silent exe "grep ".shellescape(expand('<cWORD>'))." ".expand('%').""<cr>:silent copen<cr>
 	"next match
 	autocmd FileType * nnoremap <buffer> <leader>j :cn<cr>
 	"previous match
@@ -190,6 +190,10 @@ augroup temp
 	autocmd FileType javascript onoremap <buffer> p vi)
  	"motion: find next and apply inside ()
  	autocmd FileType javascript onoremap <buffer> <silent> in( :<c-u>normal! f(vi)<cr>
-
 augroup END
 "}}}
+"toys {{{
+"nnoremap ,g :execute "silent grep -R ".shellescape(expand('<cword>'))." ."<cr>:copen<cr>
+"	autocmd FileType * nnoremap <buffer> <silent> <leader>g :silent exe "grep ".shellescape(expand('<cWORD>'))." ".expand('%').""<cr>:silent copen<cr>
+"}}}
+
