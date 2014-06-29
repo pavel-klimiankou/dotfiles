@@ -24,7 +24,8 @@ set shell=bash
 set switchbuf=useopen
 set wildmode=list:longest
 set foldmethod=manual
-set foldcolumn=1
+set foldcolumn=0
+set exrc
 filetype plugin on 	"enable ftplugin. See :help filetype-plugin-on
 set grepprg=grep\ --exclude-dir\ '.svn'\ -n\ $*\ /dev/null
 "}}}
